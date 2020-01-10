@@ -1,4 +1,4 @@
-package apitest
+package apitester
 
 import (
 	"math/rand"
