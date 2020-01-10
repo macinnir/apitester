@@ -6,8 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const url = "http://someurl.com"
-
 var at *APITest
 
 func TestMain(t *testing.T) {
@@ -24,10 +22,14 @@ func TestGetProfile_ShouldReturnDefault(t *testing.T) {
 
 func TestDestroyProfile(t *testing.T) {
 	numProfiles := len(at.GetProfileNames())
-	at.NewProfile("profile_test_to_be_destroyed")
+	if _, e := at.NewProfile("profile_test_to_be_destroyed"); e != nil {
+		t.Fatal(e)
+	}
 	assert.Equal(t, numProfiles+1, len(at.GetProfileNames()))
 
-	at.DestroyProfile("profile_test_to_be_destroyed")
+	if e := at.DestroyProfile("profile_test_to_be_destroyed"); e != nil {
+		t.Fatal(e)
+	}
 	assert.Equal(t, numProfiles, len(at.GetProfileNames()))
 }
 
@@ -40,7 +42,10 @@ func TestDestroyProfile_ShouldNotAllowDeletingDefaultProfile(t *testing.T) {
 
 func TestDestroyProfile_ShouldNotAllowDeletingCurrentProfile(t *testing.T) {
 	numProfiles := len(at.GetProfileNames())
-	at.NewProfile("new_profile")
+	if _, e := at.NewProfile("new_profile"); e != nil {
+		t.Fatal(e)
+	}
+
 	at.SetActiveProfile("new_profile")
 	e := at.DestroyProfile("new_profile")
 	assert.NotNil(t, e)
@@ -85,8 +90,8 @@ func TestGetInt_ShouldReturnZeroIfNotSet(t *testing.T) {
 }
 
 func TestIncrement(t *testing.T) {
-	val := at.SetInt("counter", 1)
-	val = at.Increment("counter")
+	at.SetInt("counter", 1)
+	val := at.Increment("counter")
 	assert.Equal(t, int64(2), val)
 	at.Increment("counter")
 	val = at.GetInt("counter")
@@ -101,8 +106,8 @@ func TestIncrement_ShouldReturn1IfNotExist(t *testing.T) {
 }
 
 func TestDecrement(t *testing.T) {
-	val := at.SetInt("counter", 1)
-	val = at.Decrement("counter")
+	at.SetInt("counter", 1)
+	val := at.Decrement("counter")
 	assert.Equal(t, int64(0), val)
 	at.Decrement("counter")
 	val = at.GetInt("counter")

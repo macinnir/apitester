@@ -72,6 +72,8 @@ func (a *APITest) init() {
 	a.sessionKey = RandString(10)
 
 	// Create the first user profile
-	a.NewProfile(DefaultProfileName)
+	if _, e := a.NewProfile(DefaultProfileName); e != nil {
+		panic(e)
+	}
 	a.SetActiveProfile(DefaultProfileName)
 }

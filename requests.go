@@ -39,7 +39,7 @@ func (r *Requests) Post(path string, body interface{}, authenticated bool) (resp
 	requestURL := r.profile.baseURL + "/" + path
 
 	r.logger.Info(fmt.Sprintf("REQUEST (Profile %d: %s): POST %s", r.profile.ID, r.profile.Name, requestURL))
-	r.logger.Debug(fmt.Sprintf("%s", string(bodyBytes)))
+	r.logger.Debug(string(bodyBytes))
 
 	request, e = http.NewRequest("POST", requestURL, bytes.NewBuffer(bodyBytes))
 	if e != nil {
@@ -99,7 +99,7 @@ func (r *Requests) Put(path string, body interface{}, authenticated bool) (respo
 	requestURL := r.profile.baseURL + "/" + path
 
 	r.logger.Info(fmt.Sprintf("REQUEST (Profile %d: %s): PUT %s", r.profile.ID, r.profile.Name, requestURL))
-	r.logger.Debug(fmt.Sprintf("%s", string(bodyBytes)))
+	r.logger.Debug(string(bodyBytes))
 
 	request, e = http.NewRequest("PUT", requestURL, bytes.NewBuffer(bodyBytes))
 	if e != nil {

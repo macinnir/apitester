@@ -6,7 +6,6 @@ import (
 )
 
 var characterRunes = []rune("abcdefghijklmnopqrstuvwxyz_1234567890")
-var numberRunes = []rune("1234567890")
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyz")
 
 // RandString returns a random string based on a set of runes
