@@ -1,4 +1,4 @@
-module github.com/macinnir/apitest
+module github.com/macinnir/apitester
 
 go 1.12
 
